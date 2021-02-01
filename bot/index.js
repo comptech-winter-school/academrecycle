@@ -6,7 +6,7 @@ if (process.env.BOT_TOKEN === undefined) {
 }
 
 const keyboard = Markup.inlineKeyboard([
-  Markup.button.callback('Delete', 'delete')
+  Markup.button.callback('Delete', 'delete'),
 ])
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
