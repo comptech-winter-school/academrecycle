@@ -23,5 +23,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.recyclePoints = require("./recyclePoints.model.js")(sequelize, Sequelize);
-
+db.recycleCities = require("./recycleCities.model.js")(sequelize, Sequelize);
+db.recycleType = require("./recycleType.model.js")(sequelize, Sequelize);
 module.exports = db;
