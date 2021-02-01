@@ -1,6 +1,5 @@
 const db = require("../model");
 const Point = db.recyclePoints;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new Point
 exports.create = (req, res) => {
@@ -28,7 +27,19 @@ exports.create = (req, res) => {
 
 // Retrieve all Points from the database.
 exports.findAll = (req, res) => {
-
+    //const title = req.query.title;
+   // onst title = req.query.title;
+   // var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+    Point.findAll()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving points."
+            });
+        });
 };
 
 // Find a single Point with an id

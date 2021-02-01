@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const RecyclePoints = sequelize.define("recyclePoints", {
+    const recyclePoints = sequelize.define("recyclePoints", {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
