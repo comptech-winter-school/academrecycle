@@ -1,7 +1,7 @@
 
 /*
 * TODO
-* write correct settings for DB
+* relocate settings to .env file
 * */
 module.exports = {
     HOST: "localhost",

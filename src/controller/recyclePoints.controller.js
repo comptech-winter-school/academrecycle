@@ -1,6 +1,22 @@
 const db = require("../model");
 const Point = db.recyclePoints;
 
+
+const getPagination = (page, size) => {
+    const limit = size ? +size : 3;
+    const offset = page ? page * limit : 0;
+
+    return { limit, offset };
+};
+
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: tutorials } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return { totalItems, tutorials, totalPages, currentPage };
+};
+
 // Create and Save a new Point
 exports.create = (req, res) => {
     // Create a Point
@@ -26,10 +42,13 @@ exports.create = (req, res) => {
 
 // Retrieve all Points from the database.
 exports.findAll = (req, res) => {
-    console.log(db)
-    db.recyclePoints.findAll()
+    console.log(req.query)
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
+    Point.findAndCountAll({ limit, offset })
         .then(data => {
-            res.send(data);
+            const response = getPagingData(data, page, limit);
+            res.send(response);
         })
         .catch(err => {
             res.status(500).send({
@@ -47,7 +66,7 @@ exports.findOne = (req, res) => {
         .then(data => {
             res.send(data);
         })
-        .catch(err => {
+        .catch(() => {
             res.status(500).send({
                 message: "Error retrieving Point with id=" + id
             });
@@ -72,7 +91,7 @@ exports.update = (req, res) => {
                 });
             }
         })
-        .catch(err => {
+        .catch(() => {
             res.status(500).send({
                 message: "Error updating RecyclePoint with id=" + id
             });
@@ -97,7 +116,7 @@ exports.delete = (req, res) => {
                 });
             }
         })
-        .catch(err => {
+        .catch(() => {
             res.status(500).send({
                 message: "Could not delete RecyclePoint with id=" + id
             });
