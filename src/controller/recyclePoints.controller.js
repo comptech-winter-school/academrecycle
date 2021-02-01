@@ -1,5 +1,5 @@
 const db = require("../model");
-const Tutorial = db.tutorials;
+const Point = db.recyclePoints;
 const Op = db.Sequelize.Op;
 
 
@@ -21,8 +21,8 @@ exports.create = (req, res) => {
         longitude: req.body.longitude
     };
 
-    // Save Tutorial in the database
-    Tutorial.create(point)
+    // Save Point in the database
+    Point.create(point)
         .then(data => {
             res.send(data);
         })
@@ -34,31 +34,31 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Points from the database.
 exports.findAll = (req, res) => {
 
 };
 
-// Find a single Tutorial with an id
+// Find a single Point with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Tutorial.findByPk(id)
+    Point.findByPk(id)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Tutorial with id=" + id
+                message: "Error retrieving Point with id=" + id
             });
         });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Point by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Tutorial.update(req.body, {
+    Point.update(req.body, {
         where: { id: id }
     })
         .then(num => {
@@ -79,11 +79,11 @@ exports.update = (req, res) => {
         });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Point with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Tutorial.destroy({
+    Point.destroy({
         where: { id: id }
     })
         .then(num => {
@@ -104,9 +104,9 @@ exports.delete = (req, res) => {
         });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Points from the database.
 exports.deleteAll = (req, res) => {
-    Tutorial.destroy({
+    Point.destroy({
         where: {},
         truncate: false
     })
@@ -116,7 +116,7 @@ exports.deleteAll = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while removing all tutorials."
+                    err.message || "Some error occurred while removing all Points."
             });
         });
 };
