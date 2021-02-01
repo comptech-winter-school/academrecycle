@@ -11,7 +11,6 @@ exports.create = (req, res) => {
         latitude: req.body.latitude,
         longitude: req.body.longitude
     };
-
     // Save Point in the database
     Point.create(point)
         .then(data => {
@@ -27,10 +26,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Points from the database.
 exports.findAll = (req, res) => {
-    //const title = req.query.title;
-   // onst title = req.query.title;
-   // var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
-    Point.findAll()
+    console.log(db)
+    db.recyclePoints.findAll()
         .then(data => {
             res.send(data);
         })

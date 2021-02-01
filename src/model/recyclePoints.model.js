@@ -9,16 +9,17 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         name: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         address: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         latitude: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         longitude: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
     });
+    return recyclePoints;
 }
