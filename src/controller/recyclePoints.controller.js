@@ -2,16 +2,8 @@ const db = require("../model");
 const Point = db.recyclePoints;
 const Op = db.Sequelize.Op;
 
-
 // Create and Save a new Point
 exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.title) {
-        res.status(400).send({
-            message: "Content can not be empty!"
-        });
-        return;
-    }
     // Create a Point
     const point = {
         recyclemap_id: req.body.recyclemap_id,
