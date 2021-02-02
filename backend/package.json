@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Проект Academrecycle на Зимней школе CompTech 2021",
   "main": "src/server.js",
@@ -22,7 +22,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "install": "^0.13.0",
-    "knex": "^0.21.17",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.5.0"

@@ -42,7 +42,6 @@ exports.create = (req, res) => {
 
 // Retrieve all Points from the database.
 exports.findAll = (req, res) => {
-    console.log(req.query)
     const { page, size } = req.query;
     const { limit, offset } = getPagination(page, size);
     Point.findAndCountAll({ limit, offset })
