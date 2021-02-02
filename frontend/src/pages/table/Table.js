@@ -15,7 +15,7 @@ class Table extends React.Component {
             {
                 pointList.map((item) => {
                     return (
-                        <Point key id={item.id} lat={item.lat} lng={item.lng} title={item.title}
+                        <Point key id={item.id} recycle_cities_id={item.recycle_cities_id} lat={item.lat} lng={item.lng} title={item.title}
                                content_text={item.content_text} address={item.address}/>
                     );
                 })
