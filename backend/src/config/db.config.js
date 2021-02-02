@@ -1,19 +1,17 @@
+require('dotenv').config();
 
-/*
-* TODO
-* relocate settings to .env file
-* */
 module.exports = {
-    HOST: "localhost",
-    USER: "postgres",
-    PASSWORD: "root",
-    DB: "test",
-    dialect: "postgres",
+    HOST: process.env.HOST || "localhost",
+    USER: process.env.USER ||"postgres",
+    PASSWORD: process.env.PASSWORD || "root",
+    PORT: process.env.DB_PORT || 5432,
+    DB: process.env.DBNAME ||"test",
+    dialect: process.env.DIALECT ||"postgres",
     pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+        max: parseInt(process.env.MAX, 10) || 5,
+        min: parseInt(process.env.MIN, 10) || 0,
+        acquire: parseInt(process.env.ACQUIRE, 10) || 30000,
+        idle: parseInt(process.env.IDLE, 10) || 10000
     },
     dialectOptions: {
         ssl: {
