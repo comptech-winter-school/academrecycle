@@ -1,26 +1,24 @@
-module.exports = app => {
-    const points = require("../controller/recyclePoints.controller.js");
+const router = require('express').Router();
+const points = require('../controller/recyclePoints.controller.js');
 
-    let router = require("express").Router();
+module.exports = (app) => {
+  // Create a new Point
+  router.post('/', points.create);
 
-    // Create a new Point
-    router.post("/", points.create);
+  // Retrieve all Point
+  router.get('/', points.findAll);
 
-    // Retrieve all Point
-    router.get("/", points.findAll);
+  // Retrieve a single Point with id
+  router.get('/:id', points.findOne);
 
+  // Update a Point with id
+  router.put('/:id', points.update);
 
-    // Retrieve a single Point with id
-    router.get("/:id", points.findOne);
+  // Delete a Point with id
+  router.delete('/:id', points.delete);
 
-    // Update a Point with id
-    router.put("/:id", points.update);
+  // Create a new Point
+  router.delete('/', points.deleteAll);
 
-    // Delete a Point with id
-    router.delete("/:id", points.delete);
-
-    // Create a new Point
-    router.delete("/", points.deleteAll);
-
-    app.use('/api/points', router);
+  app.use('/api/points', router);
 };
