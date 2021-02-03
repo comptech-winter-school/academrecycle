@@ -1,8 +1,17 @@
 import React from 'react';
 
 import './style.css';
+import ManipulateButton from "../buttons/manipulate/ManipulateButton";
 
 export default class Point extends React.Component {
+
+    onClickEdit = () => {
+
+    };
+
+    onClickRemove = () => {
+
+    };
 
     render() {
 
@@ -16,6 +25,8 @@ export default class Point extends React.Component {
                 <div className="title">{title}</div>
                 <div className="content">{content_text}</div>
                 <div className="address">{address}</div>
+                <ManipulateButton buttonName={'edit'} onClick={this.onClickEdit}/>
+                <ManipulateButton buttonName={'remove'} onClick={this.onClickRemove}/>
             </article>
         );
     };
