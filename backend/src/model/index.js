@@ -2,9 +2,10 @@ require('dotenv').config();
 const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize(dbConfig.DBNAME, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
+    dialect: dbConfig.DIALECT,
+    port: dbConfig.DBPORT,
     operatorsAliases: 1,
     logging: console.log,
     pool: {
