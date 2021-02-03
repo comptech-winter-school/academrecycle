@@ -2,3 +2,14 @@
     display: flex;
     flex-direction: column;
 }
+
+.create-button {
+    background: #50d5ad;
+    width: 130px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 500;
+    border: none;
+}
