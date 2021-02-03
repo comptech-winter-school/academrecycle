@@ -11,9 +11,9 @@ module.exports = {
     HOST: process.env.HOST || "localhost",
     USER: process.env.USER ||"postgres",
     PASSWORD: process.env.PASSWORD || "root",
-    PORT: process.env.DB_PORT || 5432,
-    DB: process.env.DBNAME ||"test",
-    dialect: process.env.DIALECT ||"postgres",
+    DBPORT: process.env.DB_PORT || 5432,
+    DBNAME: process.env.DBNAME ||"test",
+    DIALECT: process.env.DIALECT ||"postgres",
     pool: {
         max: parseInt(process.env.MAX, 10) || 5,
         min: parseInt(process.env.MIN, 10) || 0,
