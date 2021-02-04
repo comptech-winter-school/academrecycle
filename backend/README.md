@@ -11,9 +11,9 @@
 
 ### Структура .env:
 * `PORT`: порт, на котором будет висеть бэкенд *(default: 9000)*
-* `HOST`: host базы данных *(default: localhost)*
-* `USER`: user базы данных *(default: postgres)*
-* `PASSWORD`: пароль базы данных *(default: root)*
+* `DBHOST`: host базы данных *(default: localhost)*
+* `DBUSER`: user базы данных *(default: postgres)*
+* `DBPASSWORD`: пароль базы данных *(default: root)*
 * `DBPORT`: порт базы данных *(default: 5432)*
 * `DBNAME`: названии базы данных *(default: test)*
 * `DIALECT`: диалект базы данных *(default: postgres)*
