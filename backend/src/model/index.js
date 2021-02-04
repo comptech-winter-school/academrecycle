@@ -2,10 +2,8 @@ require('dotenv').config();
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/db.config.js');
 
-const sequelize = new Sequelize(dbConfig.DBNAME, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
+const sequelize = new Sequelize(`postgres://${dbConfig.DBUSER}:${dbConfig.DBPASSWORD}@${dbConfig.DBHOST}:${dbConfig.DBPORT}/${dbConfig.DBNAME}`, {
   dialect: dbConfig.DIALECT,
-  port: dbConfig.DBPORT,
   operatorsAliases: 1,
   logging: console.log,
   pool: {
