@@ -23,7 +23,7 @@ const getPagingData = (data, page, limit) => {
 exports.create = (req, res) => {
   // Create a Point
   const point = {
-    recyclemap_id: req.body.recyclemap_id,
+    recycle_cities_id: req.body.recycle_cities_id,
     name: req.body.name,
     address: req.body.address,
     latitude: req.body.latitude,
@@ -53,8 +53,7 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-                    err.message || 'Some error occurred while retrieving points.',
+        message: err.message || 'Some error occurred while retrieving points.',
       });
     });
 };

@@ -13,10 +13,6 @@ const sequelize = new Sequelize(`postgres://${dbConfig.DBUSER}:${dbConfig.DBPASS
     idle: dbConfig.pool.idle,
   },
 });
-sequelize.sync().then((result) => {
-  console.log(result);
-})
-  .catch((err) => console.log(err));
 const db = {};
 
 db.Sequelize = Sequelize;
