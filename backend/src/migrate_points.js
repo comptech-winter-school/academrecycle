@@ -15,6 +15,8 @@ const sequelize = new Sequelize(`postgres://${dbConfig.DBUSER}:${dbConfig.DBPASS
   },
 });
 
+const queryInterface = sequelize.getQueryInterface();
+
 fs.readdir('./', (err, files) => {
   files
     .filter((file) => file.substr(-5) === '.json')
@@ -26,16 +28,16 @@ fs.readdir('./', (err, files) => {
     });
 });
 
-function get_city_id(filename){
-  let cities_id_array = {
+function get_city_id(filename) {
+  const cities_id_array = {
     1: 'Омск',
     2: 'Санкт-Петербург',
     3: 'Красноярск',
     4: 'Москва',
     5: 'Новосибирск',
   };
-  for(key in cities_id_array) {
-    if(cities_id_array[key] === filename){
+  for (key in cities_id_array) {
+    if (cities_id_array[key] === filename) {
       return key;
     }
   }
@@ -44,14 +46,13 @@ function get_city_id(filename){
 
 function ParseFile(contents, filename) {
   const JsonData = JSON.parse(contents.toString());
-  const queryInterface = sequelize.getQueryInterface();
-  let id_city_for_db = get_city_id(filename);
+  const id_city_for_db = get_city_id(filename);
   if (id_city_for_db === undefined) {
     console.log('Error in select query from cities database');
     return;
   }
   for (const [key, value] of Object.entries(JsonData)) {
-    setTimeout(function() {
+    setTimeout(() => {
       queryInterface.bulkInsert('recycle_points', [{
         recycle_cities_id: id_city_for_db,
         recyclemap_id: value.id,
@@ -60,8 +61,25 @@ function ParseFile(contents, filename) {
         longitude: value.lng,
         createdAt: new Date(),
         updatedAt: new Date(),
-      }])
-        .catch((err) => console.log(err));
+      }], {
+        returning: ['id'],
+        plain: true,
+      })
+        .then((result) => RecycleTypeQuery(result.id, id_city_for_db, value.content_text));
+    }, 500);
+  }
+}
+
+function RecycleTypeQuery(point_id, city_id, type) {
+  for (const value of type.split(', ')) {
+    setTimeout(() => {
+      queryInterface.bulkInsert('recycle_types', [{
+        recycle_cities_id: city_id,
+        recycle_points_id: point_id,
+        type: value,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }]).catch((err) => console.log(err));
     }, 500);
   }
 }
