@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from 'react-modal';
-import pointsFromJson from './recyclePoints.json'
 import Point from "../../components/point/Point";
+import {get, post} from "../../fetcher/fetcher";
 import "./style.css";
 
 class Table extends React.Component {
@@ -9,11 +9,20 @@ class Table extends React.Component {
     constructor () {
         super();
         this.state = {
-            showModal: false
+            showModal: false,
+            cityId: '',
+            latitude: '',
+            longitude: '',
+            pointName: '',
+            materials: '',
+            address: '',
+            points: []
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleChangeCityId = this.handleChangeCityId.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleOpenModal () {
@@ -26,19 +35,49 @@ class Table extends React.Component {
 
     handleSubmit (e) {
         e.preventDefault()
+        const data = {
+            recycle_cities_id: this.state.cityId,
+            name: this.state.pointName,
+            address: this.state.address,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude
+        }
+        post("localhost:9000/api/points/", data)
+            .then(response => {
+                this.setState({
+                    cityId: '',
+                    latitude: '',
+                    longitude: '',
+                    pointName: '',
+                    materials: '',
+                    address: '',
+                })
+            })
+            .catch(error => {
+
+            })
     };
 
+    handleChangeCityId(event) {
+        this.setState({ cityId: event.target.value });
+    }
+
     renderList = () => {
-        let pointList = []
-        for (const [, value] of Object.entries(pointsFromJson)) {
-            pointList.push(value)
-        }
+        get("http://localhost:9000/api/points?page=0&size=20")
+            .then(response => {
+                this.setState({points: response})
+            })
+            .catch(error => {
+
+            })
+
+        const pointList = this.state.points["tutorials"] || []
 
         return <div className={'point-list'}>
             {
                 pointList.map((item) => {
                     return (
-                        <Point key id={item.id} recycle_cities_id={item.recycle_cities_id} lat={item.lat} lng={item.lng} title={item.title}
+                        <Point key id={item.id} recycle_cities_id={item.recycle_cities_id} lat={item.latitude} lng={item.longitude} title={item.name}
                                content_text={item.content_text} address={item.address}/>
                     );
                 })
@@ -56,19 +95,13 @@ class Table extends React.Component {
                 >
                     <form onSubmit={this.handleSubmit}>
                         <div>
-                            <label htmlFor="rec_id">RecycleMap id</label>
-                            <input
-                                type="text"
-                                id="rec_id"
-                                name="rec_id"
-                            />
-                        </div>
-                        <div>
                             <label htmlFor="city_id">Id города</label>
                             <input
                                 type="text"
                                 id="city_id"
                                 name="city_id"
+                                value={this.state.cityId}
+                                onChange={this.handleChangeCityId}
                             />
                         </div>
                         <div>
