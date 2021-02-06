@@ -16,13 +16,20 @@ bot.context = {
     }
 };
 bot.start((ctx) => {
-    return ctx.reply('Выберите тип отходов', Markup
-            .keyboard(constants.types)
-            .resize())
+    return  ctx.reply('Выберите тип отходов', Markup
+        .keyboard(constants.types)
+        .oneTime()
+        .resize())
     }
 
 )
-bot.help((ctx) => ctx.reply('список того, что умеет бот'))
+bot.help((ctx) => ctx.reply('Добрый день, перед вами бот, ' +
+    'который по геопозиции пользователя предоставляет адрес ближайшего пункта ' +
+    'приема вторсырья необходимого вида отходов.\n\n' +
+    'Для того, чтобы начать общение с ботом напишите: \'/start\'.\n\n' +
+    'Вам предложат выбрать тип отходов и отправить геолокацию.\n\n' +
+    '(Внимание! Геолокация во время работы приложения должна быть включена)\n\n' +
+    'Далее, бот попытается найти ближайший пункт приёма отходов и если найдёт, пришлёт вам его координаты.'))
 
 bot.command('start', (ctx) =>
     ctx.reply('Выберите тип отходов', Markup
@@ -63,7 +70,7 @@ bot
         let answer = await algorithm(bot.context)
         if(!answer.hasOwnProperty('location')) {
             return ctx.reply(answer.text +
-                "\n хотите ли вы что-нибудь ещё узнать?", Markup.keyboard(["да", "нет"])
+                "\nХотите ли вы что-нибудь ещё узнать?", Markup.keyboard(["да", "нет"])
                 .oneTime()
                 .resize());
         }else {

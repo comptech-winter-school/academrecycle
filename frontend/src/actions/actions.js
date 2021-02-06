@@ -1,3 +1,4 @@
+require('dotenv').config()
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
@@ -5,6 +6,17 @@ function checkStatus(response) {
     throw new Error(response.status);
 }
 
+export function showAllert(message, type) {
+    const Noty = require('noty');
+    new Noty({
+        text: message,
+        timeout: 5000,
+        type: type,
+        theme: 'metroui',
+        layout: 'topLeft',
+        closeWith: ['button'],
+    }).show();
+};
 export function get(url) {
     return fetch(url, {
         method: 'GET',
@@ -16,6 +28,7 @@ export function get(url) {
         .then((response) => response ? checkStatus(response) : response)
         .then((response) => response ? response.json() : {})
         .catch((error) => {
+            showAllert("error", 'error')
             throw error;
         });
 }
@@ -31,6 +44,7 @@ export function post(url, data) {
     })
         .then((response) => response ? checkStatus(response) : response)
         .catch((error) => {
+            showAllert("error", 'error')
             throw error;
         });
 }
@@ -44,6 +58,7 @@ export function deleteRequest(url) {
     })
         .then((response) => checkStatus(response))
         .catch((error) => {
+            showAllert("error", 'error')
             throw error;
         });
 }
