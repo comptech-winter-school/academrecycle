@@ -28,6 +28,30 @@ fs.readdir('./', (err, files) => {
     });
 });
 
+function get_rubbish_type_id(typestring) {
+  const type_id_array = {
+    1: 'Бумага',
+    2: 'Стекло',
+    3: 'Пластик',
+    4: 'Металл',
+    5: 'Одежда',
+    6: 'Иное',
+    7: 'Опасные отходы',
+    8: 'Батарейки',
+    9: 'Лампочки',
+    10: 'Бытовая техника',
+    11: 'Тетра Пак',
+    12: 'Крышечки',
+    13: 'Шины',
+  };//"Бумага, Стекло, Пластик, Металл, Батарейки, Тетра Пак",
+  for (key in type_id_array) {
+    if (type_id_array[key] === typestring) {
+      return key;
+    }
+  }
+  return undefined;
+}
+
 function get_city_id(filename) {
   const cities_id_array = {
     1: 'Омск',
@@ -73,10 +97,15 @@ function ParseFile(contents, filename) {
 function RecycleTypeQuery(point_id, city_id, type) {
   for (const value of type.split(', ')) {
     setTimeout(() => {
+      const id_type_for_db = get_rubbish_type_id(value);
+      if (id_type_for_db === undefined) {
+        console.log('Error in select query from types database');
+        return;
+      }
       queryInterface.bulkInsert('recycle_types', [{
         recycle_cities_id: city_id,
         recycle_points_id: point_id,
-        type: value,
+        type: id_type_for_db,
         createdAt: new Date(),
         updatedAt: new Date(),
       }]).catch((err) => console.log(err));
