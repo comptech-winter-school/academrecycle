@@ -2,3 +2,5 @@
 /backend/.idea/
 node_modules
 */node_modules
+/bot/.env
+/bot/.idea

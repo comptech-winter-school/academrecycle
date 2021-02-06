@@ -22,6 +22,8 @@ app.get('/', (req, res) => {
 });
 
 require('./routes/recyclePoint.routes')(app);
+require('./routes/recycleCities.routes')(app);
+require('./routes/recycleTypes.routes')(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {

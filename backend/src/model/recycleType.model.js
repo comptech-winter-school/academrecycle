@@ -12,8 +12,15 @@ module.exports = (sequelize, Sequelize) => {
         key: 'id',
       },
     },
+    recycle_cities_id: {
+      type: Sequelize.INTEGER,
+      references: {
+        mode: 'recycleCities',
+        key: 'id',
+      }
+    },
     type: {
-      type: Sequelize.TEXT,
+      type: Sequelize.INTEGER,
     },
   });
   return recycleType;

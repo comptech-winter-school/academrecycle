@@ -20,5 +20,6 @@ module.exports = (app) => {
   // Create a new Point
   router.delete('/', points.deleteAll);
 
+
   app.use('/api/points', router);
 };
