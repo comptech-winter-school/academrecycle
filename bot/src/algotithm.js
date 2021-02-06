@@ -1,4 +1,5 @@
 const constants = require("./constants");
+const fetch = require("node-fetch");
 exports.getNearestCity = function (citiesList, latitude, longitude) {
     let minDistance = 0;
     let currentCity = {};
@@ -50,23 +51,26 @@ exports.getHaversineDistance = function(latitude1, longitude1,  latitude2, longi
 };
 
 exports.algorithm = async function(context){
-    const allCitiesResponse = await fetch(constants.URL_ALL_CITIES);
-    const citiesList = await  allCitiesResponse.json()
-    let currentCity = exports.getNearestCity(citiesList.tutorials, context.location.latitude, context.location.longitude);
-    const allTypesResponse = await  fetch(constants.URL_TYPES + "/" + context.type + "/" + currentCity.id);
-    const types = await  allTypesResponse.json()
-    if(types.length === 0){
-        const listPoints = []
-        for(let i = 0; i < types.length; ++i){
-            const pointsResponse = await  fetch(constants.URL_POINTS + "/" + types[i].recycle_points_id);
-            const pointJson = await  pointsResponse.json()
-            listPoints.push(pointJson)
+    try {
+        const allCitiesResponse = await fetch(constants.URL_ALL_CITIES);
+        const citiesList = await  allCitiesResponse.json()
+        let currentCity = exports.getNearestCity(citiesList.tutorials, context.location.latitude, context.location.longitude);
+        const allTypesResponse = await  fetch(constants.URL_TYPES + "/" + context.type + "/" + currentCity.id);
+        const types = await  allTypesResponse.json()
+        if(types.length !== 0){
+            const listPoints = []
+            for(let i = 0; i < types.length; ++i){
+                const pointsResponse = await  fetch(constants.URL_POINTS + "/" + types[i].recycle_points_id);
+                const pointJson = await  pointsResponse.json()
+                listPoints.push(pointJson)
+            }
+            let point =  exports.getNearestPoint(listPoints, context.location.latitude, context.location.longitude);
+            return {text: "Ближайший пункт приёма:" + "\nНазвание:" + point.name + "\nадрес:" + point.address,
+            location: {latitude: point.latitude,longitude:  point.longitude}}
+        } else {
+            return {text: "В вашем городе нет пунктов, которые принимают данный вид отходов."}
         }
-        let point =  exports.getNearestPoint(listPoints, context.location.latitude, context.location.longitude);
-        return "Ближайший пункт приёма:" +
-            "\nНазвание:" + point.name +
-            "\nадрес:" + point.address
-    } else {
-        return "В вашем городе нет пунктов, которые принимают данный вид отходов."
+    }catch (err){
+        return {text: "проблемы с подключением к бэкенду, пожалуйста, обратитесь к разработчику"}
     }
 }
