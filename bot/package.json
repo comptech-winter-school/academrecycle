@@ -5,14 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test" : "mocha src/tests/*.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "eslint": "^7.19.0"
+    "eslint": "^7.19.0",
+    "mocha": "^8.2.1"
   },
   "dependencies": {
     "fetch": "^1.1.0",
