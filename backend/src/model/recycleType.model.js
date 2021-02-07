@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const recycleType = sequelize.define('recycle_type', {
+  const recycleType = sequelize.define('recycle_types', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
