@@ -6,7 +6,7 @@ function checkStatus(response) {
     throw new Error(response.status);
 }
 
-export function showAllert(message, type) {
+export function showAlert(message, type) {
     const Noty = require('noty');
     new Noty({
         text: message,
@@ -19,16 +19,14 @@ export function showAllert(message, type) {
 };
 export function get(url) {
     return fetch(url, {
-        method: 'GET',
-        headers: new Headers( {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        })
-    })
-        .then((response) => response ? checkStatus(response) : response)
-        .then((response) => response ? response.json() : {})
-        .catch((error) => {
-            showAllert("error", 'error')
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        }
+    }).then(response => {
+        return response.json();
+    }).catch(error => {
+            showAlert("error", 'error')
             throw error;
         });
 }
@@ -44,7 +42,7 @@ export function post(url, data) {
     })
         .then((response) => response ? checkStatus(response) : response)
         .catch((error) => {
-            showAllert("error", 'error')
+            showAlert("error", 'error')
             throw error;
         });
 }
@@ -58,7 +56,7 @@ export function deleteRequest(url) {
     })
         .then((response) => checkStatus(response))
         .catch((error) => {
-            showAllert("error", 'error')
+            showAlert("error", 'error')
             throw error;
         });
 }

@@ -1,11 +1,12 @@
-import {Dashboard} from "../pages/dashboard/Dashboard";
+
 import 'noty/lib/noty.css'
 import '../asserts/css/noty.css'
+import {Dashboard1} from "../pages/Dashboard1";
 require('dotenv').config()
 function App() {
     return (
         <div className="App">
-            <Dashboard/>
+            <Dashboard1/>
         </div>
     );
 }
