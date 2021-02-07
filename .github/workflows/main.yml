@@ -17,12 +17,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [ 12.x ]
 
     steps:
       - name: Install dependecies
+        with:
+          node-version: ${{ matrix.node-version }}
       - run: npm install
       - name: Install child dependecies
+        with:
+          node-version: ${{ matrix.node-version }}
       - run: npm setup
       - uses: actions/checkout@v2
       - name: Test bot and backend using Node.js ${{ matrix.node-version }}
