@@ -43,7 +43,7 @@ function get_rubbish_type_id(typestring) {
     11: 'Тетра Пак',
     12: 'Крышечки',
     13: 'Шины',
-  };//"Бумага, Стекло, Пластик, Металл, Батарейки, Тетра Пак",
+  };
   for (key in type_id_array) {
     if (type_id_array[key] === typestring) {
       return key;
@@ -81,6 +81,7 @@ function ParseFile(contents, filename) {
         recycle_cities_id: id_city_for_db,
         recyclemap_id: value.id,
         name: value.title,
+        address: value.address,
         latitude: value.lat,
         longitude: value.lng,
         createdAt: new Date(),
