@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const recycleType = sequelize.define('recycleType', {
+  const recycleType = sequelize.define('recycle_type', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -8,14 +8,14 @@ module.exports = (sequelize, Sequelize) => {
     recycle_points_id: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'recyclePoints',
+        model: 'recycle_points',
         key: 'id',
       },
     },
     recycle_cities_id: {
       type: Sequelize.INTEGER,
       references: {
-        mode: 'recycleCities',
+        mode: 'recycle_cities',
         key: 'id',
       }
     },
