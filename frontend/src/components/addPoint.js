@@ -10,7 +10,7 @@ import {
   Table,
   FormControl
 } from "@material-ui/core";
-import {put, post, showAllert} from "../actions/actions";
+import {put, post, showAlert} from "../actions/actions";
 import {BACKEND_URL} from "../consts";
 require('dotenv').config()
 export class AddPoint extends React.Component {
@@ -49,15 +49,15 @@ export class AddPoint extends React.Component {
   handleSave = () => {
     if (this.props.data.modalName === "editPoint") {
       put(BACKEND_URL+"/points/" + this.state.id, this.state).then(result => {
-       showAllert("изменение прошло успешно", 'info')
+       showAlert("изменение прошло успешно", 'info')
       }).catch(err =>{
-        showAllert(err, 'error')
+        showAlert(err, 'error')
       })
     } else {
       post(BACKEND_URL + "/points", this.state).then(result => {
-        showAllert("создание прошло успешно", 'info')
+        showAlert("создание прошло успешно", 'info')
       }).catch(err =>{
-        showAllert(err, 'error')
+        showAlert(err, 'error')
       })
     }
     this.handleCancel();
