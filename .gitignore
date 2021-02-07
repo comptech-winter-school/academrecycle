@@ -1,6 +1,10 @@
 /backend/node_modules/
 /backend/.idea/
+/backend/.env/
 node_modules
 */node_modules
 /bot/.env
 /bot/.idea
+/frontend/node_modules/
+/frontend/.idea/
+/frontend/.end/

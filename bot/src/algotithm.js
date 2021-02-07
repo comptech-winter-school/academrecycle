@@ -10,6 +10,9 @@ exports.getNearestCity = function (citiesList, latitude, longitude) {
             minDistance = distance;
         }
     }
+    if(minDistance > 100000){
+        return {};
+    }
     return currentCity;
 }
 exports.getNearestPoint = function (pointsList, latitude, longitude) {
@@ -55,6 +58,10 @@ exports.algorithm = async function(context){
         const allCitiesResponse = await fetch(constants.URL_ALL_CITIES);
         const citiesList = await  allCitiesResponse.json()
         let currentCity = exports.getNearestCity(citiesList.tutorials, context.location.latitude, context.location.longitude);
+        if(!currentCity.hasOwnProperty("name")){
+            return {text: "Извините, ваш город пока не поддерживается, " +
+                    "но мы работаем над обновлением базы, надеемся, что скоро он появится."}
+        }
         const allTypesResponse = await  fetch(constants.URL_TYPES + "/" + context.type + "/" + currentCity.id);
         const types = await  allTypesResponse.json()
         if(types.length !== 0){

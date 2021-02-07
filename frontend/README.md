@@ -1,3 +1,7 @@
+### Структура .env:
+* `BACKEND_URL`: URL, на который будут отправляться запросы, например "http://localhost:9000/api"
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
