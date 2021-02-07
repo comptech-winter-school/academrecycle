@@ -10,7 +10,7 @@ import {
     Table,
     Paper,
 } from "@material-ui/core";
-import {AddPoint} from "../../components/AddPoint";
+import {AddPoint} from "../../components/addPoint";
 import {BACKEND_URL} from "../../consts";
 export class Dashboard extends React.Component {
     constructor(props) {
