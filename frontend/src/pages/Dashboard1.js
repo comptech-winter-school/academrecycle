@@ -98,18 +98,12 @@ export class Dashboard1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             elementsCount: 0,
             pagesCount: 0,
             rowsPerPage: 5,
             rows: [],
-            page: 0,
+            page: 1,
         };
-        this.setState(
-            {
-                emptyRows: this.state.rowsPerPage - Math.min(this.state.rowsPerPage, this.state.elementsCount - this.state.page * this.state.rowsPerPage)
-            }
-        )
         this.loadData = this.loadData.bind(this)
         this.handleChangePage = this.handleChangePage.bind(this)
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this)
@@ -120,35 +114,45 @@ export class Dashboard1 extends React.Component {
     componentDidMount() {
         this.loadData()
     }
-
     loadData(){
-        let url = BACKEND_URL +"/points?page=" + this.state.page + "&size=" + this.state.rowsPerPage
+        let url = BACKEND_URL +"/points"
+
+        get(url).then(data => {
+            this.setState({
+                elementsCount: data.totalItems,
+            });
+            console.log(this.state.elementsCount)
+        })
+        url = BACKEND_URL +"/points?page=0&size=14355"
         get(url).then(data => {
             console.log(data)
             this.setState({
-                elementsCount: data.totalItems,
-                pagesCount: data.totalPages,
-                page: data.currentPage,
                 rows: data.tutorials || [],
-                open: false,
-                modalName: "",
-                rowData: {},
-                index: 0
             });
         })
     }
     handleChangePage = (event, newPage) => {
         this.setState({
-            currentPage: newPage
+            page: newPage
         });
-        this.loadData()
+        this.setState(
+            {
+                emptyRows: this.state.rowsPerPage - Math.min(this.state.rowsPerPage, this.state.elementsCount - this.state.page * this.state.rowsPerPage)
+            }
+        )
+   //     this.loadData()
     };
 
     handleChangeRowsPerPage = (event) => {
         this.setState({
             rowsPerPage: parseInt(event.target.value, 10)
         })
-        this.loadData()
+        this.setState(
+            {
+                emptyRows: this.state.rowsPerPage - Math.min(this.state.rowsPerPage, this.state.elementsCount - this.state.page * this.state.rowsPerPage)
+            }
+        )
+       // this.loadData()
     };
     renderInputs = (name, id) => (
         <FormControl>
