@@ -13,6 +13,7 @@
     "eslint-plugin-react": "^7.22.0"
   },
   "scripts": {
+    "install-local" : "cd ./bot && npm install && cd ../ && cd ./backend && npm install",
     "test": "cd ./bot && npm test && cd ../ && cd ./backend && npm test"
   },
   "repository": {
