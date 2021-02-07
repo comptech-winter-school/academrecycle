@@ -20,12 +20,13 @@ jobs:
         node-version: [12.x]
 
     steps:
+      - name: Install dependecies
+      - run: npm install
+      - name: Install child dependecies
+      - run: npm setup
       - uses: actions/checkout@v2
       - name: Test bot and backend using Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
-      npm install
-      npm setup
-      npm test
+      - run: npm test
